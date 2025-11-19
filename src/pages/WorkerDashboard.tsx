@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { LogOut, MessageSquare, TrendingUp } from "lucide-react";
 import RoomsList from "@/components/RoomsList";
 import WorkerSalesStats from "@/components/WorkerSalesStats";
+import CopyableId from "@/components/CopyableId";
 
 const WorkerDashboard = () => {
   const navigate = useNavigate();
@@ -50,9 +51,11 @@ const WorkerDashboard = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
+          <div className="flex-1">
             <h1 className="text-2xl font-bold text-foreground">Worker Dashboard</h1>
-            <p className="text-sm text-muted-foreground">ID: {profile?.id}</p>
+            <div className="mt-2 max-w-md">
+              <CopyableId id={profile?.id || ""} label="Your Worker ID (Share this with admin)" />
+            </div>
           </div>
           <Button variant="outline" onClick={handleSignOut}>
             <LogOut className="mr-2 h-4 w-4" />
