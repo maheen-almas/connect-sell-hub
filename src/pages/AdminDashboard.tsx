@@ -15,6 +15,7 @@ const AdminDashboard = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [showCreateRoom, setShowCreateRoom] = useState(false);
+  const [refreshRooms, setRefreshRooms] = useState(0);
 
   useEffect(() => {
     checkAuth();
@@ -87,7 +88,7 @@ const AdminDashboard = () => {
             <CardDescription>Click on a room to start chatting</CardDescription>
           </CardHeader>
           <CardContent>
-            <RoomsList role="admin" />
+            <RoomsList role="admin" refreshTrigger={refreshRooms} />
           </CardContent>
         </Card>
       </main>
@@ -96,6 +97,7 @@ const AdminDashboard = () => {
         open={showCreateRoom}
         onOpenChange={setShowCreateRoom}
         adminId={profile?.id || ""}
+        onSuccess={() => setRefreshRooms(prev => prev + 1)}
       />
     </div>
   );

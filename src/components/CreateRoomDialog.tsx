@@ -10,9 +10,10 @@ interface CreateRoomDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   adminId: string;
+  onSuccess?: () => void;
 }
 
-const CreateRoomDialog = ({ open, onOpenChange, adminId }: CreateRoomDialogProps) => {
+const CreateRoomDialog = ({ open, onOpenChange, adminId, onSuccess }: CreateRoomDialogProps) => {
   const [workerId, setWorkerId] = useState("");
   const [isCreating, setIsCreating] = useState(false);
 
@@ -57,6 +58,7 @@ const CreateRoomDialog = ({ open, onOpenChange, adminId }: CreateRoomDialogProps
       toast.success("Room created successfully!");
       setWorkerId("");
       onOpenChange(false);
+      onSuccess?.(); // Trigger refresh of rooms list
     } catch (error: any) {
       toast.error(error.message || "Failed to create room");
     } finally {
@@ -76,13 +78,14 @@ const CreateRoomDialog = ({ open, onOpenChange, adminId }: CreateRoomDialogProps
             <Label htmlFor="workerId">Worker ID</Label>
             <Input
               id="workerId"
-              placeholder="Enter worker's user ID"
+              placeholder="Paste worker's user ID here"
               value={workerId}
               onChange={(e) => setWorkerId(e.target.value)}
               required
+              className="font-mono"
             />
             <p className="text-xs text-muted-foreground">
-              Workers can find their ID on their dashboard
+              The worker can copy their ID from their dashboard header. Make sure it's a valid UUID.
             </p>
           </div>
           <div className="flex justify-end gap-2">

@@ -7,16 +7,17 @@ import { MessageSquare } from "lucide-react";
 
 interface RoomsListProps {
   role: "admin" | "worker";
+  refreshTrigger?: number;
 }
 
-const RoomsList = ({ role }: RoomsListProps) => {
+const RoomsList = ({ role, refreshTrigger }: RoomsListProps) => {
   const navigate = useNavigate();
   const [rooms, setRooms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchRooms();
-  }, []);
+  }, [refreshTrigger]); // Re-fetch when refreshTrigger changes
 
   const fetchRooms = async () => {
     try {
